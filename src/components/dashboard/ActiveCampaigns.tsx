@@ -3,50 +3,64 @@ import { Campaign } from "@/lib/types";
 
 interface ActiveCampaignsProps {
   campaigns: Campaign[];
+  setEditingCampaign: (campaign: Campaign) => void;
 }
 
-export function ActiveCampaigns({ campaigns }: ActiveCampaignsProps) {
+export function ActiveCampaigns({
+  campaigns,
+  setEditingCampaign,
+}: ActiveCampaignsProps) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {campaigns.map((campaign) => (
-        <ActiveCampaign key={campaign.id} campaign={campaign} />
+        <ActiveCampaign
+          key={campaign.id}
+          campaign={campaign}
+          onClick={(campaign) => setEditingCampaign(campaign)}
+        />
       ))}
     </div>
   );
 }
 
-function ActiveCampaign({ campaign }: { campaign: Campaign }) {
+interface ActiveCampaignProps {
+  campaign: Campaign;
+  onClick: (campaign: Campaign) => void;
+}
+
+function ActiveCampaign({ campaign, onClick }: ActiveCampaignProps) {
   const titleInitials = campaign.title
     .split(" ")
     .map((word) => (word.length > 0 ? word[0] : ""))
     .slice(0, 2)
-    .join("");
+    .join("")
+    .toUpperCase();
   const budget = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    // Ensuring that the output is formatted as a positive number
   }).format(Math.abs(campaign.budget));
 
   return (
-    <div className="flex items-center">
+    <div
+      className="flex items-center hover:ring-1 ring-gray-400 rounded-md cursor-pointer p-3 hover:bg-gray-50 group"
+      onClick={() => {
+        onClick(campaign);
+      }}
+    >
       <Avatar className="h-9 w-9">
-        <AvatarFallback>{titleInitials}</AvatarFallback>
+        <AvatarFallback className="group-hover:border">
+          {titleInitials}
+        </AvatarFallback>
       </Avatar>
       <div className="ml-4 space-y-1">
-        <p
-          className="text-sm font-medium leading-none truncate"
-          style={{ maxWidth: "250px" }}
-        >
-          {campaign.title}
-        </p>
+        <p className="text-sm font-medium leading-none">{campaign.title}</p>
         <p
           className="text-sm text-muted-foreground truncate"
           style={{ maxWidth: "250px" }}
         >
-          {campaign.headline}
+          {budget}
         </p>
       </div>
-      <div className="ml-auto font-medium">{budget}</div>
     </div>
   );
 }

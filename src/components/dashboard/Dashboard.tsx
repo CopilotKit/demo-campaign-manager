@@ -17,9 +17,10 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 interface DashboardProps {
   campaigns: Campaign[];
+  setEditingCampaign: (campaign: Campaign) => void;
 }
 
-export function Dashboard({ campaigns }: DashboardProps) {
+export function Dashboard({ campaigns, setEditingCampaign }: DashboardProps) {
   return (
     <>
       <div className="flex-col md:flex">
@@ -36,7 +37,19 @@ export function Dashboard({ campaigns }: DashboardProps) {
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
-              <Button>
+              <Button
+                onClick={() => {
+                  setEditingCampaign({
+                    id: "",
+                    keywords: "",
+                    title: "",
+                    budget: 0,
+                    description: "",
+                    url: "",
+                    headline: "",
+                  });
+                }}
+              >
                 <PlusCircleIcon className="w-5 h-5 mr-2" /> New Campaign
               </Button>
             </div>
@@ -178,7 +191,10 @@ export function Dashboard({ campaigns }: DashboardProps) {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ActiveCampaigns campaigns={campaigns} />
+                    <ActiveCampaigns
+                      campaigns={campaigns}
+                      setEditingCampaign={setEditingCampaign}
+                    />
                   </CardContent>
                 </Card>
               </div>

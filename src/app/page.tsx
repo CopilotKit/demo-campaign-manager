@@ -1,13 +1,22 @@
 "use client";
-import { Dashboard } from "@/components/dashboard/Dashboard";
-import { DEFAULT_CAMPAIGNS } from "@/lib/data";
-import { Campaign } from "@/lib/types";
-import { useState } from "react";
-import _ from "lodash";
+import { App } from "@/components/app/App";
+import { CopilotKit } from "@copilotkit/react-core";
+import { CopilotSidebar } from "@copilotkit/react-ui";
 
 export default function DashboardPage() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>(
-    _.cloneDeep(DEFAULT_CAMPAIGNS)
+  return (
+    <CopilotKit url="/api/copilotkit/">
+      <CopilotSidebar
+        instructions="Help the user create and manage ad campaigns."
+        defaultOpen={true}
+        labels={{
+          title: "Campaign Manager Copilot",
+          initial: "Hi you! 👋 I can help you manage your ad campaigns.",
+        }}
+        clickOutsideToClose={false}
+      >
+        <App />
+      </CopilotSidebar>
+    </CopilotKit>
   );
-  return <Dashboard campaigns={campaigns} />;
 }
