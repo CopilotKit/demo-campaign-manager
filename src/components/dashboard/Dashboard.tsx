@@ -44,6 +44,7 @@ export function Dashboard({ campaigns, setEditingCampaign }: DashboardProps) {
                     keywords: "",
                     title: "",
                     budget: 0,
+                    dailyBudget: 0,
                     description: "",
                     url: "",
                     headline: "",

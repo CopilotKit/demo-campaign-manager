@@ -46,6 +46,8 @@ export function App() {
       : "Not editing a campaign"
   );
 
+  useMakeCopilotReadable("Today's date is " + new Date().toDateString());
+
   useCopilotAction({
     name: "UpdateCampaign",
     description:
