@@ -63,20 +63,6 @@ export function CampaignForm({ campaign, updateCampaign }: CampaignFormProps) {
                 }}
               />
             </div>
-            <div className="flex">
-              <DatePicker
-                id="startDate"
-                label="Start Date"
-                className="w-1/2"
-                campaign={campaign}
-              />
-              <DatePicker
-                id="endDate"
-                label="End Date"
-                className="w-1/2"
-                campaign={campaign}
-              />
-            </div>
           </div>
           <div className="p-4 border border-gray-200 rounded-sm mt-3 mr-1">
             <h3 className="text-lg font-semibold mb-4">Budget & Bidding</h3>
