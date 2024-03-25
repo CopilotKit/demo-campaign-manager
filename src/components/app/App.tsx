@@ -125,12 +125,7 @@ export function App() {
           "engagement",
         ],
       },
-      {
-        name: "dailyBudget",
-        description: "The daily budget of the campaign",
-        type: "number",
-        required: false,
-      },
+
       {
         name: "bidStrategy",
         description: "The bid strategy of the campaign",
@@ -166,6 +161,67 @@ export function App() {
       } else {
         return "Updating campaign";
       }
+    },
+  });
+
+  useCopilotAction({
+    name: "retrieveHistoricalData",
+    description: "Retrieve historical data for certain keywords",
+    parameters: [
+      {
+        name: "keywords",
+        description: "The keywords to retrieve data for",
+        type: "string",
+      },
+      {
+        name: "type",
+        description: "The type of data to retrieve for the keywords.",
+        type: "string",
+        enum: ["CPM", "CPA", "CPC"],
+      },
+    ],
+    handler: async ({ type }) => {
+      function getRandomValue(min: number, max: number) {
+        return (Math.random() * (max - min) + min).toFixed(2);
+      }
+
+      // fake the API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      if (type == "CPM") {
+        return getRandomValue(0.5, 10);
+      } else if (type == "CPA") {
+        return getRandomValue(5, 100);
+      } else if (type == "CPC") {
+        return getRandomValue(0.2, 2);
+      }
+    },
+    render: (props) => {
+      let label = "Retrieving historical data ...";
+      if (props.args.type) {
+        label = `Retrieving ${props.args.type} for keywords ...`;
+      }
+      if (props.status === "complete") {
+        label = `Done retrieving ${props.args.type} for keywords.`;
+      }
+
+      const done = props.status === "complete";
+      return (
+        <div className="">
+          <div className=" w-full relative max-w-xs">
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
+            <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+              <h1 className="font-bold text-sm text-white mb-4 relative z-50">
+                {label}
+              </h1>
+              <p className="font-normal text-base text-teal-200 mb-2 relative z-50 whitespace-pre">
+                {props.args.type &&
+                  `Historical ${props.args.type}: ${props.result || "..."}`}
+              </p>
+            </div>
+          </div>
+        </div>
+      );
     },
   });
 

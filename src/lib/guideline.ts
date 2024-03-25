@@ -22,7 +22,6 @@ export const GUIDELINE: string = `
 - **Bid Strategy:** CPM
 - **Calculations:**
   - Determine your target reach and average industry CPM rates.
-  - Use the Total Budget and Daily Budget formulas above.
 
 ### Scenario: Maximizing Online Sales During a Holiday
 - **Objective:** Sales Conversion
@@ -30,36 +29,22 @@ export const GUIDELINE: string = `
 - **Calculations:**
   - Estimate the number of sales you aim
 
-to achieve and determine the average cost per acquisition.
-  - Use the Total Budget formula for Sales Conversion to calculate your overall budget.
-  - Divide the Total Budget by the number of days in the campaign for the Daily Budget.
-  - Calculate Bid Amount using the CPA formula, factoring in historical conversion data and desired profit margins.
-
 ### Scenario: Growing the Subscriber List
 - **Objective:** Lead Generation
 - **Bid Strategy:** CPA or Manual CPC
 - **Calculations:**
-  - Set a target for new leads and determine your average cost per acquisition or cost per click.
-  - Calculate the Total Budget needed to hit the lead target using the CPA or CPC rates.
-  - Divide by the campaign duration to find the Daily Budget.
   - Decide on Bid Amount based on historical data and the competitive landscape.
 
 ### Scenario: Increasing Blog Readership
 - **Objective:** Website Traffic
 - **Bid Strategy:** Manual CPC
 - **Calculations:**
-  - Decide on the number of new visitors desired.
-  - Estimate the Total Budget using the desired clicks and average CPC.
-  - Calculate Daily Budget by dividing the Total Budget by the campaign length.
   - Set a Bid Amount slightly higher than the average CPC to remain competitive.
 
 ### Scenario: Engaging the Community with Content
 - **Objective:** Engagement
 - **Bid Strategy:** CPM or Manual CPC (if specific interactions are more valuable)
 - **Calculations:**
-  - Define the desired number of interactions (likes, shares, comments).
-  - Calculate the Total Budget using the CPM rate, considering the average engagement rate of ads.
-  - For Daily Budget, divide the Total Budget by the campaign's duration.
   - Determine Bid Amount based on whether you're paying per interaction (CPC) or per impression (CPM).
 
 ## Prohibited content

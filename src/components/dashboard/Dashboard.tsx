@@ -65,7 +65,6 @@ export function Dashboard({
                     keywords: "",
                     title: "",
                     budget: 0,
-                    dailyBudget: 0,
                     description: "",
                     url: "",
                     headline: "",

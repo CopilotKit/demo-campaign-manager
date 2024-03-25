@@ -87,12 +87,6 @@ export function CampaignForm({
                 className="w-1/2"
                 campaign={campaign}
               />
-              <TextInput
-                id="dailyBudget"
-                label="Daily Budget"
-                className="w-1/2"
-                campaign={campaign}
-              />
             </div>
             <div className="flex">
               <Dropdown
