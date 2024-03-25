@@ -105,9 +105,45 @@ export function App() {
         type: "number",
         required: false,
       },
+      {
+        name: "objective",
+        description: "The objective of the campaign",
+        type: "string",
+        enum: [
+          "brand-awareness",
+          "lead-generation",
+          "sales-conversion",
+          "website-traffic",
+          "engagement",
+        ],
+      },
+      {
+        name: "dailyBudget",
+        description: "The daily budget of the campaign",
+        type: "number",
+        required: false,
+      },
+      {
+        name: "bidStrategy",
+        description: "The bid strategy of the campaign",
+        type: "string",
+        enum: ["manual-cpc", "cpa", "cpm"],
+        required: false,
+      },
+      {
+        name: "bidAmount",
+        description: "The bid amount of the campaign",
+        type: "number",
+        required: false,
+      },
     ],
     handler: (campaign) => {
-      setEditingCampaign(campaign as Campaign);
+      const newValue = _.assign(
+        _.cloneDeep(editingCampaign),
+        _.omitBy(campaign, _.isUndefined)
+      ) as Campaign;
+
+      setEditingCampaign(newValue);
     },
     render: (props) => {
       if (props.status === "complete") {
