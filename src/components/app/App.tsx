@@ -12,6 +12,7 @@ import { Dashboard } from "../dashboard/Dashboard";
 import { CampaignForm } from "./CampaignForm";
 import { randomId } from "@/lib/utils";
 import { GUIDELINE } from "@/lib/guideline";
+import { SCRIPT } from "@/lib/script";
 
 export function App() {
   const [campaigns, setCampaigns] = useState<Campaign[]>(
@@ -50,6 +51,8 @@ export function App() {
   useMakeCopilotReadable("Today's date is " + new Date().toDateString());
 
   useMakeCopilotReadable(GUIDELINE);
+
+  useMakeCopilotReadable(SCRIPT);
 
   useCopilotAction({
     name: "UpdateCampaign",
