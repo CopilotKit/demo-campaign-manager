@@ -22,10 +22,15 @@ import { format } from "date-fns";
 
 interface CampaignFormProps {
   campaign?: Campaign;
+  segments: string[];
   updateCampaign: (campaign?: Campaign) => void;
 }
 
-export function CampaignForm({ campaign, updateCampaign }: CampaignFormProps) {
+export function CampaignForm({
+  campaign,
+  updateCampaign,
+  segments,
+}: CampaignFormProps) {
   if (!campaign) return null;
   return (
     <div
@@ -61,6 +66,15 @@ export function CampaignForm({ campaign, updateCampaign }: CampaignFormProps) {
                   "website-traffic": "Website Traffic",
                   engagement: "Engagement",
                 }}
+              />
+            </div>
+            <div className="flex">
+              <Dropdown
+                id="segment"
+                label="Segment"
+                campaign={campaign}
+                className="w-1/2"
+                items={Object.fromEntries(segments.map((s) => [s, s]))}
               />
             </div>
           </div>

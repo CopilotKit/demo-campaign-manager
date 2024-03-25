@@ -15,4 +15,5 @@ export interface Campaign {
   dailyBudget?: number;
   bidStrategy?: "manual-cpc" | "cpa" | "cpm";
   bidAmount?: number;
+  segment?: string;
 }

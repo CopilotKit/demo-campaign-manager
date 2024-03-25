@@ -15,6 +15,14 @@ import { GUIDELINE } from "@/lib/guideline";
 import { SCRIPT } from "@/lib/script";
 
 export function App() {
+  const [segments, setSegments] = useState<string[]>([
+    "Millennials/Female/Urban",
+    "Parents/30s/Suburbs",
+    "Seniors/Female/Rural",
+    "Professionals/40s/Midwest",
+    "Gamers/Male",
+  ]);
+
   const [campaigns, setCampaigns] = useState<Campaign[]>(
     _.cloneDeep(DEFAULT_CAMPAIGNS)
   );
@@ -136,6 +144,13 @@ export function App() {
         type: "number",
         required: false,
       },
+      {
+        name: "segment",
+        description: "The segment of the campaign",
+        type: "string",
+        required: false,
+        enum: segments,
+      },
     ],
     handler: (campaign) => {
       const newValue = _.assign(
@@ -157,6 +172,7 @@ export function App() {
   return (
     <div className="relative">
       <CampaignForm
+        segments={segments}
         campaign={_.cloneDeep(editingCampaign)}
         updateCampaign={(campaign) => {
           if (campaign) {
@@ -168,6 +184,8 @@ export function App() {
       <Dashboard
         campaigns={campaigns}
         setEditingCampaign={setEditingCampaign}
+        segments={segments}
+        setSegments={setSegments}
       />
     </div>
   );

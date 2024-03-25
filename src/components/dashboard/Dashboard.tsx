@@ -14,13 +14,25 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Campaign } from "@/lib/types";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { Pencil1Icon } from "@radix-ui/react-icons";
+import { useState } from "react";
+import SegmentsManager from "./Segments";
 
 interface DashboardProps {
   campaigns: Campaign[];
   setEditingCampaign: (campaign: Campaign) => void;
+  segments: string[];
+  setSegments: (segments: string[]) => void;
 }
 
-export function Dashboard({ campaigns, setEditingCampaign }: DashboardProps) {
+export function Dashboard({
+  campaigns,
+  setEditingCampaign,
+  segments,
+  setSegments,
+}: DashboardProps) {
+  const [isEditingSegments, setIsEditingSegments] = useState(false);
+
   return (
     <>
       <div className="flex-col md:flex">
@@ -37,6 +49,15 @@ export function Dashboard({ campaigns, setEditingCampaign }: DashboardProps) {
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  setIsEditingSegments(true);
+                }}
+              >
+                <Pencil1Icon className="w-5 h-5 mr-2" /> Edit Segments
+              </Button>
+
               <Button
                 onClick={() => {
                   setEditingCampaign({
@@ -203,6 +224,15 @@ export function Dashboard({ campaigns, setEditingCampaign }: DashboardProps) {
           </Tabs>
         </div>
       </div>
+      {isEditingSegments && (
+        <SegmentsManager
+          segments={segments}
+          setSegments={setSegments}
+          onClose={() => {
+            setIsEditingSegments(false);
+          }}
+        />
+      )}
     </>
   );
 }

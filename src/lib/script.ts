@@ -14,4 +14,5 @@ ONCE YOU HAVE THE REQUIRED INFORMATION, USE YOUR BEST GUESS FOR THE REST OF THE 
 **Assistant:** “Could you describe your ideal customer? What are their interests, demographics, and online behaviors?”
 
 - Understanding the target audience will assist in selecting appropriate **Keywords**, crafting the **Headline** and **Description** for the ad copy, and further refine the **Campaign Objective** and **Bid Strategy**.
+- The user has defined their own list of **Segments** that can be used to further target the audience. It's important to set the right segment for the campaign if it can be inferred from the user's response.
 `;
