@@ -12,7 +12,7 @@ import { Dashboard } from "../dashboard/Dashboard";
 import { CampaignForm } from "./CampaignForm";
 import { randomId } from "@/lib/utils";
 import { GUIDELINE } from "@/lib/guideline";
-import { SCRIPT } from "@/lib/script";
+import { SCRIPT_SUGGESTION } from "@/lib/script";
 
 export function App() {
   const [segments, setSegments] = useState<string[]>([
@@ -46,12 +46,14 @@ export function App() {
     undefined
   );
 
+  // Ground the Copilot with domain-specific knowledge for this use-case: marketing campaigns.
+  useMakeCopilotReadable(GUIDELINE);
+  useMakeCopilotReadable(SCRIPT_SUGGESTION);
+
+  // Provide teh Copilot with the current date.
   useMakeCopilotReadable("Today's date is " + new Date().toDateString());
 
-  useMakeCopilotReadable(GUIDELINE);
-
-  useMakeCopilotReadable(SCRIPT);
-
+  // Provide this component's Copilot with the ability to update the current campaign.
   useCopilotAction({
     name: "updateCurrentCampaign",
     description:
@@ -154,6 +156,8 @@ export function App() {
     },
   });
 
+  // Provide this component's Copilot with the ability to retrieve historical cost data for certain keywords.
+  // Will be called automatically when needed by the Copilot.
   useCopilotAction({
     name: "retrieveHistoricalData",
     description: "Retrieve historical data for certain keywords",
@@ -171,12 +175,12 @@ export function App() {
       },
     ],
     handler: async ({ type }) => {
+      // fake an API call that retrieves historical data for cost for certain keywords based on campaign type (CPM, CPA, CPC)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       function getRandomValue(min: number, max: number) {
         return (Math.random() * (max - min) + min).toFixed(2);
       }
-
-      // fake the API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       if (type == "CPM") {
         return getRandomValue(0.5, 10);
@@ -187,6 +191,7 @@ export function App() {
       }
     },
     render: (props) => {
+      // Custom in-chat component rendering. Different components can be rendered based on the status of the action.
       let label = "Retrieving historical data ...";
       if (props.args.type) {
         label = `Retrieving ${props.args.type} for keywords ...`;
