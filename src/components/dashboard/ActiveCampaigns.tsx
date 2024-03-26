@@ -3,12 +3,12 @@ import { Campaign } from "@/lib/types";
 
 interface ActiveCampaignsProps {
   campaigns: Campaign[];
-  setEditingCampaign: (campaign: Campaign) => void;
+  setCurrentCampaign: (campaign: Campaign) => void;
 }
 
 export function ActiveCampaigns({
   campaigns,
-  setEditingCampaign,
+  setCurrentCampaign,
 }: ActiveCampaignsProps) {
   return (
     <div className="space-y-4">
@@ -16,7 +16,7 @@ export function ActiveCampaigns({
         <ActiveCampaign
           key={campaign.id}
           campaign={campaign}
-          onClick={(campaign) => setEditingCampaign(campaign)}
+          onClick={(campaign) => setCurrentCampaign(campaign)}
         />
       ))}
     </div>

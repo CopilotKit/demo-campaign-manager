@@ -11,27 +11,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
+import { useMakeCopilotReadable } from "@copilotkit/react-core";
 
 interface CampaignFormProps {
-  campaign?: Campaign;
+  currentCampaign?: Campaign;
+  setCurrentCampaign: (campaign?: Campaign) => void;
   segments: string[];
-  updateCampaign: (campaign?: Campaign) => void;
+  saveCampaign: (campaign?: Campaign) => void;
 }
 
 export function CampaignForm({
-  campaign,
-  updateCampaign,
+  currentCampaign,
+  setCurrentCampaign,
+  saveCampaign,
   segments,
 }: CampaignFormProps) {
-  if (!campaign) return null;
+  useMakeCopilotReadable(
+    currentCampaign
+      ? `Currently editing campaign: ${JSON.stringify(
+          currentCampaign,
+          null,
+          2
+        )}`
+      : "Not editing a campaign"
+  );
+
+  if (!currentCampaign) return null;
   return (
     <div
       className="bg-white/70 absolute inset-0 z-10"
@@ -42,7 +47,7 @@ export function CampaignForm({
     >
       <div className="bg-white p-5 rounded-lg shadow-lg max-w-2xl w-full mx-auto my-16 space-y-4 border">
         <h2 className="text-xl font-semibold text-gray-900 border-b pb-3">
-          {campaign.id == "" ? "New" : "Edit"} Campaign
+          {currentCampaign.id == "" ? "New" : "Edit"} Campaign
         </h2>
         <div style={{ maxHeight: "60vh", overflowY: "auto" }}>
           <div className="p-4 border border-gray-200 rounded-sm mr-1">
@@ -51,13 +56,15 @@ export function CampaignForm({
               <TextInput
                 id="title"
                 label="Campaign Name"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
                 className="w-1/2"
               />
               <Dropdown
                 id="objective"
                 label="Campaign Objective"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
                 className="w-1/2"
                 items={{
                   "brand-awareness": "Brand Awareness",
@@ -72,7 +79,8 @@ export function CampaignForm({
               <Dropdown
                 id="segment"
                 label="Segment"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
                 className="w-1/2"
                 items={Object.fromEntries(segments.map((s) => [s, s]))}
               />
@@ -85,7 +93,8 @@ export function CampaignForm({
                 id="budget"
                 label="Total Budget"
                 className="w-1/2"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
               />
             </div>
             <div className="flex">
@@ -93,7 +102,8 @@ export function CampaignForm({
                 id="bidStrategy"
                 label="Bid Strategy"
                 className="w-1/2"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
                 items={{
                   "manual-cpc": "Manual CPC",
                   cpa: "CPA",
@@ -104,7 +114,8 @@ export function CampaignForm({
                 id="bidAmount"
                 label="Bid Amount"
                 className="w-1/2"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
               />
             </div>
           </div>
@@ -115,13 +126,15 @@ export function CampaignForm({
                 className="w-1/2"
                 id="keywords"
                 label="Keywords"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
               />
               <TextInput
                 className="w-1/2"
                 id="finalUrl"
                 label="Final URL"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
               />
             </div>
             <div className="flex">
@@ -129,13 +142,15 @@ export function CampaignForm({
                 className="w-1/2"
                 id="headline"
                 label="Headline"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
               />
               <TextInput
                 className="w-1/2"
                 id="description"
                 label="Description"
-                campaign={campaign}
+                campaign={currentCampaign}
+                setCampaign={setCurrentCampaign}
               />
             </div>
           </div>
@@ -144,11 +159,11 @@ export function CampaignForm({
           <Button
             variant="secondary"
             className="mr-5"
-            onClick={() => updateCampaign(undefined)}
+            onClick={() => saveCampaign(undefined)}
           >
             Cancel
           </Button>
-          <Button onClick={() => updateCampaign(campaign)}>Save</Button>
+          <Button onClick={() => saveCampaign(currentCampaign)}>Save</Button>
         </div>
       </div>
     </div>
@@ -160,23 +175,16 @@ interface TextInputProps {
   label: string;
   className?: string;
   campaign: Campaign;
+  setCampaign: (campaign: Campaign) => void;
 }
 
-function TextInput({ id, label, className, campaign }: TextInputProps) {
-  const [inputValue, setInputValue] = useState((campaign as any)[id] || "");
-
-  useEffect(() => {
-    setInputValue((campaign as any)[id] || "");
-  }, [campaign, id]);
-
-  const handleChange = (e: any) => {
-    const newValue =
-      id === "budget" ? parseInt(e.target.value, 10) : e.target.value;
-    setInputValue(newValue);
-
-    (campaign as any)[id] = newValue;
-  };
-
+function TextInput({
+  id,
+  label,
+  className,
+  campaign,
+  setCampaign,
+}: TextInputProps) {
   return (
     <div className={clsx("grid w-full items-center gap-1.5 p-2", className)}>
       <Label className="text-xs " htmlFor={id}>
@@ -187,8 +195,13 @@ function TextInput({ id, label, className, campaign }: TextInputProps) {
         className="text-xs px-2 ring-0 outline-0 focus-visible:ring-0"
         id={id}
         placeholder={label}
-        onChange={handleChange}
-        value={inputValue}
+        onChange={(e: any) =>
+          setCampaign({
+            ...campaign,
+            [id]: e.target.value,
+          })
+        }
+        value={(campaign as any)[id] || ""}
       />
     </div>
   );
@@ -199,28 +212,27 @@ interface DropdownProps {
   label: string;
   className?: string;
   campaign: Campaign;
+  setCampaign: (campaign: Campaign) => void;
   items: { [key: string]: string };
 }
 
-function Dropdown({ id, label, className, campaign, items }: DropdownProps) {
-  const [inputValue, setInputValue] = useState((campaign as any)[id] || "");
-
-  useEffect(() => {
-    setInputValue((campaign as any)[id] || "");
-  }, [campaign, id]);
-
-  const handleChange = (newValue: string) => {
-    setInputValue(newValue);
-
-    (campaign as any)[id] = newValue;
-  };
-
+function Dropdown({
+  id,
+  label,
+  className,
+  campaign,
+  setCampaign,
+  items,
+}: DropdownProps) {
   return (
     <div className={clsx("grid w-full items-center gap-1.5 p-2", className)}>
       <Label className="text-xs" htmlFor={id}>
         {label}
       </Label>
-      <Select onValueChange={handleChange} value={inputValue}>
+      <Select
+        onValueChange={(value) => setCampaign({ ...campaign, [id]: value })}
+        value={(campaign as any)[id] || ""}
+      >
         <SelectTrigger className="w-full text-xs focus:ring-0">
           <SelectValue className="text-xs" placeholder={label} />
         </SelectTrigger>
@@ -232,59 +244,6 @@ function Dropdown({ id, label, className, campaign, items }: DropdownProps) {
           ))}
         </SelectContent>
       </Select>
-    </div>
-  );
-}
-
-interface DaterPickerProps {
-  id: string;
-  label: string;
-  className?: string;
-  campaign: Campaign;
-}
-
-function DatePicker({ id, label, className, campaign }: DaterPickerProps) {
-  const [inputValue, setInputValue] = useState(
-    (campaign as any)[id] || undefined
-  );
-
-  useEffect(() => {
-    setInputValue((campaign as any)[id] || undefined);
-  }, [campaign, id]);
-
-  const handleChange = (newValue?: Date) => {
-    setInputValue(newValue);
-
-    (campaign as any)[id] = newValue;
-  };
-
-  return (
-    <div className={clsx("grid w-full items-center gap-1.5 p-2", className)}>
-      <Label className="text-xs" htmlFor={id}>
-        {label}
-      </Label>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={clsx(
-              "justify-start text-left font-normal text-xs",
-              !inputValue && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {inputValue ? format(inputValue, "PPP") : <span>Pick a date</span>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={inputValue}
-            onSelect={handleChange}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
     </div>
   );
 }

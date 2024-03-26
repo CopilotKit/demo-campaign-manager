@@ -27,7 +27,7 @@ export function App() {
     _.cloneDeep(DEFAULT_CAMPAIGNS)
   );
 
-  function updateCampaign(campaign: Campaign) {
+  function saveCampaign(campaign: Campaign) {
     if (campaign.id === "") {
       campaign.id = randomId();
       setCampaigns([campaign, ...campaigns]);
@@ -42,18 +42,8 @@ export function App() {
     }
   }
 
-  const [editingCampaign, setEditingCampaign] = useState<Campaign | undefined>(
+  const [currentCampaign, setCurrentCampaign] = useState<Campaign | undefined>(
     undefined
-  );
-
-  useMakeCopilotReadable(
-    "These are the active campaigns:" + JSON.stringify(campaigns)
-  );
-
-  useMakeCopilotReadable(
-    editingCampaign
-      ? `Currently editing campaign id ${editingCampaign.id}`
-      : "Not editing a campaign"
   );
 
   useMakeCopilotReadable("Today's date is " + new Date().toDateString());
@@ -63,7 +53,7 @@ export function App() {
   useMakeCopilotReadable(SCRIPT);
 
   useCopilotAction({
-    name: "UpdateCampaign",
+    name: "updateCurrentCampaign",
     description:
       "Edit an existing campaign or create a new one. To update only a part of a campaign, provide the id of the campaign to edit and the new values only.",
     parameters: [
@@ -149,11 +139,11 @@ export function App() {
     ],
     handler: (campaign) => {
       const newValue = _.assign(
-        _.cloneDeep(editingCampaign),
+        _.cloneDeep(currentCampaign),
         _.omitBy(campaign, _.isUndefined)
       ) as Campaign;
 
-      setEditingCampaign(newValue);
+      setCurrentCampaign(newValue);
     },
     render: (props) => {
       if (props.status === "complete") {
@@ -229,17 +219,18 @@ export function App() {
     <div className="relative">
       <CampaignForm
         segments={segments}
-        campaign={_.cloneDeep(editingCampaign)}
-        updateCampaign={(campaign) => {
+        currentCampaign={currentCampaign}
+        setCurrentCampaign={setCurrentCampaign}
+        saveCampaign={(campaign) => {
           if (campaign) {
-            updateCampaign(campaign);
+            saveCampaign(campaign);
           }
-          setEditingCampaign(undefined);
+          setCurrentCampaign(undefined);
         }}
       />
       <Dashboard
         campaigns={campaigns}
-        setEditingCampaign={setEditingCampaign}
+        setCurrentCampaign={setCurrentCampaign}
         segments={segments}
         setSegments={setSegments}
       />

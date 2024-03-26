@@ -20,14 +20,14 @@ import SegmentsManager from "./Segments";
 
 interface DashboardProps {
   campaigns: Campaign[];
-  setEditingCampaign: (campaign: Campaign) => void;
+  setCurrentCampaign: (campaign: Campaign) => void;
   segments: string[];
   setSegments: (segments: string[]) => void;
 }
 
 export function Dashboard({
   campaigns,
-  setEditingCampaign,
+  setCurrentCampaign,
   segments,
   setSegments,
 }: DashboardProps) {
@@ -60,7 +60,7 @@ export function Dashboard({
 
               <Button
                 onClick={() => {
-                  setEditingCampaign({
+                  setCurrentCampaign({
                     id: "",
                     keywords: "",
                     title: "",
@@ -214,7 +214,7 @@ export function Dashboard({
                   <CardContent>
                     <ActiveCampaigns
                       campaigns={campaigns}
-                      setEditingCampaign={setEditingCampaign}
+                      setCurrentCampaign={setCurrentCampaign}
                     />
                   </CardContent>
                 </Card>
