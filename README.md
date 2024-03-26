@@ -29,7 +29,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
   1. Search for `useMakeCopilotReadable` to see where frontend application information is being made accessible to the Copilot engine
 
   2. Search for `updateCurrentCampaign` and `retrieveHistoricalData` to see where the frontend application action is made accessible to the Copilot engine.
-```
+
 
 ## Learn More
 
