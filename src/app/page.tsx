@@ -11,7 +11,7 @@ export default function DashboardPage() {
         defaultOpen={true}
         labels={{
           title: "Campaign Manager Copilot",
-          initial: "Hi you! 👋 I can help you manage your ad campaigns.",
+          initial: "Hello there! I can help you manage your ad campaigns. What campaign would you like to work on?",
         }}
         clickOutsideToClose={false}
       >
