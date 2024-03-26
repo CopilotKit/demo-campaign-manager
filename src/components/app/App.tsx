@@ -54,6 +54,13 @@ export function App() {
   useMakeCopilotReadable("Today's date is " + new Date().toDateString());
 
   // Provide this component's Copilot with the ability to update the current campaign.
+  //
+  // This implementation uses a single large function with optional parameters to update the current campaign.
+  // But you can also use multiple smaller actions to update different parts of the campaign - even one for each field.
+  // Up to you.
+  //
+  // (In the near future we will provide CopilotForm types, which unify  useMakeCopilotReadable and useCopilotAction for a given form's values.
+  // Feel free to ask about this on our Discord: https://discord.gg/t89H6TzmKm).
   useCopilotAction({
     name: "updateCurrentCampaign",
     description:
