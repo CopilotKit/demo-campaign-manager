@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@copilotkit/backend": "^0.5.0",
-    "@copilotkit/react-core": "^0.21.0",
-    "@copilotkit/react-textarea": "^0.31.0",
-    "@copilotkit/react-ui": "^0.18.0",
+    "@copilotkit/backend": "^0.6.0",
+    "@copilotkit/react-core": "^0.22.0",
+    "@copilotkit/react-textarea": "^0.32.0",
+    "@copilotkit/react-ui": "^0.19.0",
     "@heroicons/react": "^2.1.1",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
