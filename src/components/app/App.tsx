@@ -2,10 +2,7 @@
 import { DEFAULT_CAMPAIGNS } from "@/lib/data";
 import { Campaign } from "@/lib/types";
 import { use, useState } from "react";
-import {
-  useCopilotAction,
-  useMakeCopilotReadable,
-} from "@copilotkit/react-core";
+import { useCopilotAction, useCopilotReadable } from "@copilotkit/react-core";
 
 import _ from "lodash";
 import { Dashboard } from "../dashboard/Dashboard";
@@ -47,11 +44,14 @@ export function App() {
   );
 
   // Ground the Copilot with domain-specific knowledge for this use-case: marketing campaigns.
-  useMakeCopilotReadable(GUIDELINE);
-  useMakeCopilotReadable(SCRIPT_SUGGESTION);
+  useCopilotReadable({ description: "Guideline", value: GUIDELINE });
+  useCopilotReadable({ description: "Script", value: SCRIPT_SUGGESTION });
 
-  // Provide teh Copilot with the current date.
-  useMakeCopilotReadable("Today's date is " + new Date().toDateString());
+  // Provide the Copilot with the current date.
+  useCopilotReadable({
+    description: "Current Date",
+    value: new Date().toDateString(),
+  });
 
   // Provide this component's Copilot with the ability to update the current campaign.
   //
@@ -59,7 +59,7 @@ export function App() {
   // But you can also use multiple smaller actions to update different parts of the campaign - even one for each field.
   // Up to you.
   //
-  // (In the near future we will provide CopilotForm types, which unify  useMakeCopilotReadable and useCopilotAction for a given form's values.
+  // (In the near future we will provide CopilotForm types, which unify useCopilotReadable and useCopilotAction for a given form's values.
   // Feel free to ask about this on our Discord: https://discord.gg/t89H6TzmKm).
   useCopilotAction({
     name: "updateCurrentCampaign",

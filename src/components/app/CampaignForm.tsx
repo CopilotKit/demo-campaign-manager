@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMakeCopilotReadable } from "@copilotkit/react-core";
+import { useCopilotReadable } from "@copilotkit/react-core";
 
 interface CampaignFormProps {
   currentCampaign?: Campaign;
@@ -26,15 +26,10 @@ export function CampaignForm({
   saveCampaign,
   segments,
 }: CampaignFormProps) {
-  useMakeCopilotReadable(
-    currentCampaign
-      ? `Currently editing campaign: ${JSON.stringify(
-          currentCampaign,
-          null,
-          2
-        )}`
-      : "Not editing a campaign"
-  );
+  useCopilotReadable({
+    description: "Current Campaign",
+    value: currentCampaign,
+  });
 
   if (!currentCampaign) return null;
   return (

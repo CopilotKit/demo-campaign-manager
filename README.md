@@ -24,16 +24,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-
 ### 4. Use the Copilot
+
 Create a new campaign, or edit an existing campaign, and use the Copilot assitant to configure the form without requiring domain knowledge.
 
-
 ## Zoom in on the CopilotKit code
-  1. Search for `useMakeCopilotReadable` to see where frontend application information is being made accessible to the Copilot engine
 
-  2. Search for `updateCurrentCampaign` and `retrieveHistoricalData` to see where the frontend application action is made accessible to the Copilot engine.
+1. Search for `useCopilotReadable` to see where frontend application information is being made accessible to the Copilot engine
 
+2. Search for `updateCurrentCampaign` and `retrieveHistoricalData` to see where the frontend application action is made accessible to the Copilot engine.
 
 ## Learn More
 
