@@ -32,7 +32,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ### 4. Use the Copilot
 
-Create a new campaign, or edit an existing campaign, and use the Copilot assitant to configure the form without requiring domain knowledge.
+Create a new campaign, or edit an existing campaign, and use the Copilot assistant to configure the form without requiring domain knowledge.
 
 ## Zoom in on the CopilotKit code
 
