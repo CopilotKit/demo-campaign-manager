@@ -4,7 +4,7 @@ This is a demo that showcases using CopilotKit to build a PowerPoint like web ap
 
 To deploy with Vercel, click the button below:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCopilotKit%2Fcampaign-manager-demo&env=NEXT_PUBLIC_COPILOT_CLOUD_API_KEY&project-name=copilotkit-campaign-manager-demo&repository-name=copilotkit-campaign-manager-demo)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCopilotKit%2Fdemo-campaign-manager&env=NEXT_PUBLIC_COPILOT_CLOUD_API_KEY&project-name=copilotkit-demo-campaign-manager&repository-name=copilotkit-demo-campaign-manager)
 
 ## Getting Started
 
