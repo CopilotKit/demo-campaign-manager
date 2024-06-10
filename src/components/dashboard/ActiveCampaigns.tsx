@@ -29,7 +29,7 @@ interface ActiveCampaignProps {
 }
 
 function ActiveCampaign({ campaign, onClick }: ActiveCampaignProps) {
-  const titleInitials = campaign.title
+  const titleInitials = (campaign.title || "")
     .split(" ")
     .map((word) => (word.length > 0 ? word[0] : ""))
     .slice(0, 2)
