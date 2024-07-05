@@ -1,10 +1,16 @@
-import { CopilotRuntime, OpenAIAdapter } from "@copilotkit/backend";
+import { NextRequest } from "next/server";
+import {
+  CopilotRuntime,
+  OpenAIAdapter,
+  copilotRuntimeNextJSAppRouterEndpoint,
+} from "@copilotkit/runtime";
 
-export const runtime = "edge";
+export const POST = async (req: NextRequest) => {
+  const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
+    runtime: new CopilotRuntime(),
+    serviceAdapter: new OpenAIAdapter(),
+    endpoint: req.nextUrl.pathname,
+  });
 
-export async function POST(req: Request): Promise<Response> {
-  const copilotKit = new CopilotRuntime({});
-  const openaiModel = process.env["OPENAI_MODEL"];
-
-  return copilotKit.response(req, new OpenAIAdapter({ model: openaiModel }));
-}
+  return handleRequest(req);
+};
